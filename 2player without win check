@@ -1,0 +1,160 @@
+// ConsoleApplication15.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+
+
+
+using namespace std;
+
+HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);	//Used in setP to grab the active screen buffer (references the console ouput screen)
+COORD coordinate;	//Used in setP to use the X and Y coordinates of the referenced output console
+
+void setP(int, int);	//Used to set the cursor at the specified ( X, Y ) value. Reference point of ( 0, 0 ) is the top left of the ouput console.
+
+
+
+
+int main()
+{
+
+
+
+	char pF[3][3] = { '-','-','-','-','-','-','-','-','-' };	//The array which holds the X's and O's
+	int x = 12, y = 6, i = 0, a = 0, b = 0;	
+	/*
+	x - the x screen coordinate
+	y - the y screen coordinate
+	i - the turn number, used to check for a win
+	a - the initial value of the pF[a][b] array
+	b - the secondary value of the pF[a][b] array
+	*/
+	bool versus = true;
+
+
+	setP(x, y); cout << "^^^";
+
+	while (versus == true)
+	{
+		//Draws a playing field.
+		setP(10, 3);	cout << "*-----------------*";
+		setP(10, 5);	cout << "|  " << pF[0][0] << "  |  " << pF[0][1] << "  |  " << pF[0][2] << "  | ";
+		setP(10, 7);	cout << "-------------------";
+		setP(10, 9);	cout << "|  " << pF[1][0] << "  |  " << pF[1][1] << "  |  " << pF[1][2] << "  | ";
+		setP(10, 11);	cout << "-------------------";
+		setP(10, 13);	cout << "|  " << pF[2][0] << "  |  " << pF[2][1] << "  |  " << pF[2][2] << "  | ";
+		setP(10, 15);	cout << "*-----------------*";
+
+
+		if (i >= 5)	//Checks for a win on turn 5
+		{
+
+			if (	//Possible positions of X to win.
+				((pF[0][0] == 'X') && (pF[1][0] == 'X') && (pF[2][0] == 'X')) || ((pF[0][1] == 'X') && (pF[1][1] == 'X') && (pF[2][1] == 'X')) ||
+				((pF[0][2] == 'X') && (pF[1][2] == 'X') && (pF[2][2] == 'X')) || ((pF[0][0] == 'X') && (pF[0][1] == 'X') && (pF[0][2] == 'X')) ||
+				((pF[1][0] == 'X') && (pF[1][1] == 'X') && (pF[1][2] == 'X')) || ((pF[2][0] == 'X') && (pF[2][1] == 'X') && (pF[2][2] == 'X')) ||
+				((pF[0][0] == 'X') && (pF[1][1] == 'X') && (pF[2][2] == 'X')) || ((pF[0][2] == 'X') && (pF[1][1] == 'X') && (pF[2][0] == 'X'))
+				)
+			{
+				setP(15, 0); cout << "X Wins!!!!" << endl;
+				versus = false;
+				setP(0, 17);
+				break;
+			}
+			else if (	//Possible positions of O to win.
+				((pF[0][0] == 'O') && (pF[1][0] == 'O') && (pF[2][0] == 'O')) || ((pF[0][1] == 'O') && (pF[1][1] == 'O') && (pF[2][1] == 'O')) ||
+				((pF[0][2] == 'O') && (pF[1][2] == 'O') && (pF[2][2] == 'O')) || ((pF[0][0] == 'O') && (pF[0][1] == 'O') && (pF[0][2] == 'O')) ||
+				((pF[1][0] == 'O') && (pF[1][1] == 'O') && (pF[1][2] == 'O')) || ((pF[2][0] == 'O') && (pF[2][1] == 'O') && (pF[2][2] == 'O')) ||
+				((pF[0][0] == 'O') && (pF[1][1] == 'O') && (pF[2][2] == 'O')) || ((pF[0][2] == 'O') && (pF[1][1] == 'O') && (pF[2][0] == 'O'))
+				)
+			{
+				setP(15, 0); cout << "O Wins!!!!" << endl;
+				versus = false;
+				setP(0, 17);
+				break;
+			}
+			if (i == 9) //If no one wins in 9 turns, the game ends in a draw.
+			{
+				setP(15, 0); cout << "DRAW GAME!" << endl;
+				versus = false;
+				setP(0, 17);
+				break;
+			}
+
+
+		}
+
+		
+		//cin.ignore(); (if pause can't be used)
+		//cin.get(); (if pause can't be used)
+		system("pause>nul"); //Pauses the active screen
+		//fgetc(stdin);
+		
+		//_getch();
+
+
+
+		if (GetAsyncKeyState(VK_DOWN) && y != 14)	//Moves the cursor down until y = 14 and increases the "a" value for pF[a][b]
+		{
+			setP(x, y); cout << "   ";
+			y += 4;
+			setP(x, y); cout << "^^^";
+			a++;
+			continue;
+		}
+		if (GetAsyncKeyState(VK_UP) && y != 6)	//Moves the cursor down until y = 6 and decreases the "a" value for pF[a][b]
+		{
+			setP(x, y); cout << "   ";
+			y -= 4;
+			setP(x, y); cout << "^^^";
+			a--;
+			continue;
+		}
+		if (GetAsyncKeyState(VK_LEFT) && x != 12)	//Moves the cursor left until x = 12 and decreases the "b" value for pF[a][b]
+		{
+			setP(x, y); cout << "   ";
+			x -= 6;
+			setP(x, y); cout << "^^^";
+			b--;
+			continue;
+		}
+		if (GetAsyncKeyState(VK_RIGHT) && x != 24)	//Moves the cursor right until x = 24 and increases the "b" value for pF[a][b]
+		{
+			setP(x, y); cout << "   ";
+			x += 6;
+			setP(x, y); cout << "^^^";
+			b++;
+			continue;
+		}
+
+		if (GetAsyncKeyState(VK_RETURN)) //When enter/return is pressed, checks for even # rounds and checks if the element is already an 'X' or 'O'
+		{
+			if ((i % 2 == 0) && (pF[a][b] == '-'))	//Places an X into pF[a][b] if the round is even
+			{
+				pF[a][b] = 'X';
+				i++;
+			}
+			else if (!(i % 2 == 0) && (pF[a][b] == '-'))	//Places an O into pF[a][b] if the round is even
+			{
+				pF[a][b] = 'O';
+				i++;
+			}
+		}
+
+
+	}
+
+
+	return 0;
+}
+
+
+void setP(int x, int y)	//Used to set the cursor at the specified ( X, Y ) value. Reference point of ( 0, 0 ) is the top left of the ouput console.
+{
+	coordinate.X = x;
+	coordinate.Y = y;
+	SetConsoleCursorPosition(screen, coordinate);
+}
