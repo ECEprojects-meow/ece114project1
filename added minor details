@@ -85,7 +85,7 @@ int main()
 			setP(32, 9);	cout << "|";	setP(51, 9); cout << "|";
 			setP(32, 10);	cout << "*------------------*";
 
-			setP(32, 13);	cout << "Press 'Escape' to force the program to end anytime.";
+			setP(32, 13);	cout << "Press 'Escape' to force the program to end.";
 
 			if (versus == true) {
 				setP(10, 0); cout << "*** TIC TAC TOE ***" << endl;
