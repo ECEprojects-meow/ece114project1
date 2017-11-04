@@ -1,6 +1,30 @@
 // ConsoleApplication15.cpp : Defines the entry point for the console application.
 //
 
+
+/*
+Variables:
+
+int:
+x - the x screen coordinate
+y - the y screen coordinate
+i - the turn number, used to check for a win
+a - the initial value of the pF[a][b] array
+b - the secondary value of the pF[a][b] array
+r - used to check to replay or exit
+p1W - keeps track of number of wins for player 1
+p2W - keeps track of number of wins for player 2
+
+bool:
+versus - main loop for game inputs
+restart - loop to restart or exit program
+choice - loop to choose to replay or end program
+
+*/
+
+
+
+
 #include "stdafx.h"
 #include <iostream>
 #include <Windows.h>
@@ -16,32 +40,19 @@ COORD coordinate;	//Used in setP to use the X and Y coordinates of the reference
 void setP(int, int);	//Used to set the cursor at the specified ( X, Y ) value. Reference point of ( 0, 0 ) is the top left of the ouput console.
 
 
-
+//--------------------------------------main--------------------------------------//
 
 int main()
 {
 
-
-
-	
 	bool versus = true, restart = true, choice = true;
-
 	int r = 0, p1W = 0, p2W = 0;
-	
 
-	while (restart == true)
+	while (restart == true) //Loops the whole program, choice at the end to break
 	{
 
-		
 		char pF[3][3] = { '-','-','-','-','-','-','-','-','-' };	//The array which holds the X's and O's
 		int x , y, i, a, b;
-		/*
-		x - the x screen coordinate
-		y - the y screen coordinate
-		i - the turn number, used to check for a win
-		a - the initial value of the pF[a][b] array
-		b - the secondary value of the pF[a][b] array
-		*/
 		x = 12;
 		y = 6;
 		i = 0;
@@ -99,7 +110,7 @@ int main()
 					((pF[0][0] == 'X') && (pF[1][1] == 'X') && (pF[2][2] == 'X')) || ((pF[0][2] == 'X') && (pF[1][1] == 'X') && (pF[2][0] == 'X'))
 					)
 				{
-					setP(10, 2); cout << "Game ended! Player 1 Wins!" << endl;
+					setP(7, 2); cout << "Game ended! Player 1 Wins!" << endl;
 					p1W++;
 					versus = false;
 					break;
@@ -111,7 +122,7 @@ int main()
 					((pF[0][0] == 'O') && (pF[1][1] == 'O') && (pF[2][2] == 'O')) || ((pF[0][2] == 'O') && (pF[1][1] == 'O') && (pF[2][0] == 'O'))
 					)
 				{
-					setP(10, 2); cout << "Game ended! Player 2 Wins!" << endl;
+					setP(7, 2); cout << "Game ended! Player 2 Wins!" << endl;
 					p2W++;
 					versus = false;
 					break;
@@ -119,7 +130,8 @@ int main()
 				
 				if (i == 9) //If no one wins in 9 turns, the game ends in a draw.
 				{
-					setP(15, 0); cout << "DRAW GAME!" << endl;
+					setP(7, 2); cout << "                         " << endl;
+					setP(15, 2); cout << "DRAW GAME!" << endl;
 					versus = false;
 					
 					break;
@@ -195,14 +207,13 @@ int main()
 		x = 2;
 		setP(2, 21); cout << "^^^";
 		
-		while (choice == true)
+		while (choice == true)	//Choice of playing more or closing the program.
 		{
 			system("PAUSE>nul");
 			if (GetAsyncKeyState(VK_LEFT) && x != 2)
 			{
 				setP(x, 21); cout << "     ";
 				x -= 7;
-				
 				setP(x, 21); cout << "^^^";
 				r--;
 			}
@@ -236,7 +247,7 @@ int main()
 	return 0;
 }
 
-
+//--------------------------------------setP--------------------------------------//
 void setP(int x, int y)	//Used to set the cursor at the specified ( X, Y ) value. Reference point of ( 0, 0 ) is the top left of the ouput console.
 {
 	coordinate.X = x;
