@@ -85,6 +85,8 @@ int main()
 			setP(32, 9);	cout << "|";	setP(51, 9); cout << "|";
 			setP(32, 10);	cout << "*------------------*";
 
+			setP(32, 13);	cout << "Press 'Escape' to force the program to end anytime.";
+
 			if (versus == true) {
 				setP(10, 0); cout << "*** TIC TAC TOE ***" << endl;
 				if (i % 2 == 0)		//Checks who's turn it is	
@@ -199,18 +201,25 @@ int main()
 					i++;
 				}
 			}
+			if (GetAsyncKeyState(VK_ESCAPE))	//Forces the program to end when escape key is pressed
+			{
+				restart = false;
+				choice = false;
+				break;
+			}
 		}
-	
-		setP(0, 18); cout << "Would you like to play again?" << endl;
-		setP(2, 20); cout << "Yes";
-		setP(9, 20); cout << "No";
-		x = 2;
-		setP(2, 21); cout << "^^^";
-		
+		if (!(GetAsyncKeyState(VK_ESCAPE)))
+		{
+			setP(0, 18); cout << "Would you like to play again?" << endl;
+			setP(2, 20); cout << "Yes";
+			setP(9, 20); cout << "No";
+			x = 2;
+			setP(2, 21); cout << "^^^";
+		}
 		while (choice == true)	//Choice of playing more or closing the program.
 		{
 			system("PAUSE>nul");
-			if (GetAsyncKeyState(VK_LEFT) && x != 2)
+			if (GetAsyncKeyState(VK_LEFT) && x != 2) //Left or right selection for yes or no, increases or decreases "r"
 			{
 				setP(x, 21); cout << "     ";
 				x -= 7;
@@ -225,7 +234,7 @@ int main()
 				r++;
 			}
 
-			if (GetAsyncKeyState(VK_RETURN))
+			if (GetAsyncKeyState(VK_RETURN))	//Takes the "r" value to restart or end the program
 			{
 				if (r == 0)
 				{
@@ -238,6 +247,11 @@ int main()
 					restart = false;
 					break;
 				}
+			}
+			if (GetAsyncKeyState(VK_ESCAPE))	//Forces the program to end when escape key is pressed
+			{
+				restart = false;
+				break;
 			}
 		}
 	}
