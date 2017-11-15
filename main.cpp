@@ -4,8 +4,8 @@
 using namespace std;
 
 int main() {
-  TicTacToe Game;
-  Game.menu();
+  TicTacToe game = TicTacToe("Fatfat 1", "Fatfat 2");
+  game.menu();
 
   return 0;
 }
