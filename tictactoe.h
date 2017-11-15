@@ -15,6 +15,7 @@ COORD coordinate;
 class TicTacToe {
 public:
     TicTacToe();
+    TicTacToe(string, string);
     int onePlayer();
     void computerMove(int a, int b, char pF[3][3]);
     int twoPlayer();

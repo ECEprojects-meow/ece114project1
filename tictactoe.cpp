@@ -1,14 +1,19 @@
 #include "tictactoe.h"
 
 TicTacToe::TicTacToe() {
-    this->gameMode[0] = 0;
-    this->gameMode[1] = 1;
+    this->name1 = "Player 1";
+    this->name2 = "Player 2";
+}
+
+TicTacToe::TicTacToe(string name1, string name2) {
+    this->name1 = name1;
+    this->name2 = name2;
 }
 
 //********************************************************************************************************
 //--------------------------------------one player vs. computer--------------------------------------//
 int TicTacToe::onePlayer() {
-  drawBoard("Player 1", "Computer", 0);
+  drawBoard(name1, "Computer", 0);
 }
 //********************************************************************************************************
 
@@ -28,7 +33,7 @@ void TicTacToe::computerMove(int a, int b, char pF[3][3]) {
 //********************************************************************************************************
 //--------------------------------------one player vs. computer--------------------------------------//
 int TicTacToe::twoPlayer() {
-  drawBoard("Player 1", "Player 2", 1);
+  drawBoard(name1, name2, 1);
 }
 //********************************************************************************************************
 
@@ -217,7 +222,7 @@ void TicTacToe::drawBoard(string name1, string name2, int gameMode) {
           ((pF[0][0] == 'X') && (pF[1][1] == 'X') && (pF[2][2] == 'X')) || ((pF[0][2] == 'X') && (pF[1][1] == 'X') && (pF[2][0] == 'X'))
           )
         {
-          setP(7, 2); cout << "Game ended!" << name1 << " Wins!" << endl;
+          setP(7, 2); cout << "Game ended! " << name1 << " Wins!" << endl;
           player1Count++;
           inGame = false;
           break;
