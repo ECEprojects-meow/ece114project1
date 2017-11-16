@@ -27,9 +27,7 @@ private:
   int gameMode[2];
   bool menuOn;
 	int row, menuChoice, pause_menu;
-  char pF[3][3] = { '-','-','-','-','-','-','-','-','-' };	//The array which holds the X's and O's
   int x = 12, y = 6, turn = 0, a = 0, b = 0;
-
   bool inGame = true, drawBoardOn = true, choice = true, pause;
   int player1Count = 0, player2Count = 0;
   string name1, name2;

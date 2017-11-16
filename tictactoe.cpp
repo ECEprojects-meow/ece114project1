@@ -1,37 +1,57 @@
 #include "tictactoe.h"
 
+//--------------------------------------default constructor--------------------------------------//
+/*
+  Description: if no parameters, the initial values for name1 and name2 is "Player 1" and "Player 2"
+*/
 TicTacToe::TicTacToe() {
     this->name1 = "Player 1";
     this->name2 = "Player 2";
 }
 
+
+//--------------------------------------converting constructor--------------------------------------//
+/*
+  Description: if there are parameters, set the given values for name1 and name2
+*/
 TicTacToe::TicTacToe(string name1, string name2) {
     this->name1 = name1;
     this->name2 = name2;
 }
 
-//********************************************************************************************************
-//--------------------------------------one player vs. computer--------------------------------------//
+
+//--------------------------------------onePlayer()--------------------------------------//
+/*
+  Description:  - called when the user choose the player vs. computer mode
+                - name2 is replaced with "Computer"
+  Note: needs to be developed more to add the AI computer mode
+*/
 int TicTacToe::onePlayer() {
   drawBoard(name1, "Computer", 0);
 }
 //********************************************************************************************************
 
-//********************************************************************************************************
-void TicTacToe::computerMove(int a, int b, char pF[3][3]) {
 
+//--------------------------------------computerMove()--------------------------------------//
+/*
+  Description: user random to determine computer's move and place 'O' in the current position
+  Variables:
+    - int a, b: the current values of the pF array that is being worked on
+*/
+void TicTacToe::computerMove(int a, int b, char pF[3][3]) {
     while (pF[a][b] != '-') {
       a = rand() % 3;
       b = rand() % 3;
-
     }
     pF[a][b] = 'O';
 }
 //********************************************************************************************************
 
 
-//********************************************************************************************************
-//--------------------------------------one player vs. computer--------------------------------------//
+//--------------------------------------twoPlayer()--------------------------------------//
+/*
+  Description: called when the user choose the player vs. player mode
+*/
 int TicTacToe::twoPlayer() {
   drawBoard(name1, name2, 1);
 }
@@ -151,9 +171,22 @@ void TicTacToe::menu() {
 //********************************************************************************************************
 
 
-
-//********************************************************************************************************
-//--------------------------------------drawBoard--------------------------------------//
+//--------------------------------------drawBoard()--------------------------------------//
+/*
+  Description: draw the play field and play the game after calling the menu and choosing the gameMode, also display the pause menu if the RETURN key is pressed
+  Variables:
+  - bool inGame: main loop for game inputs
+  - bool drawBoardOn: loop to display the play field or exit the play field
+  - bool choice: loop to choose to replay or end program
+  - bool pause: to display the pause menu
+  - int row: current position of user's choice
+  - int player1Count, player2Count: current scores of 2 players (+1 per winner per match)
+  - int pause_menu: user's choice in the pause menu (0 = continue, 1 = main menu, 2 = exit)
+  - char pF[][]: the multimensional array that store the players' mark in a match (initial value = '-', name1's mark = 'X', name2's mark = 'O')
+  - int turn: count the turn
+  - int x, y: screen coordinate
+  - int a, b: current position in the play field (pF)
+*/
 void TicTacToe::drawBoard(string name1, string name2, int gameMode) {
   inGame = true, drawBoardOn = true, choice = true, pause;
   row = 0, player1Count = 0, player2Count = 0, pause_menu = 0;
@@ -163,7 +196,7 @@ void TicTacToe::drawBoard(string name1, string name2, int gameMode) {
     system("cls");        // clear screen
 
     char pF[3][3] = { '-','-','-','-','-','-','-','-','-' };	//The array which holds the X's and O's
-    int x = 12, y = 6, turn = 0, a = 0, b = 0;
+    x = 12, y = 6, turn = 0, a = 0, b = 0;
 
     setP(x, y); cout << "^^^";
 
@@ -495,10 +528,13 @@ void TicTacToe::drawBoard(string name1, string name2, int gameMode) {
 //********************************************************************************************************
 
 
-
-//********************************************************************************************************
-//--------------------------------------setP--------------------------------------//
-void TicTacToe::setP(int x, int y)	//Used to set the cursor at the specified ( X, Y ) value. Reference point of ( 0, 0 ) is the top left of the ouput console.
+//--------------------------------------setP()--------------------------------------//
+/*
+  Description: used to set the cursor at the specified ( X, Y ) value. Reference point of ( 0, 0 ) is the top left of the ouput console.
+  Variables:
+    - int x, y: screen coordinates
+*/
+void TicTacToe::setP(int x, int y)
 {
   coordinate.X = x;
   coordinate.Y = y;
